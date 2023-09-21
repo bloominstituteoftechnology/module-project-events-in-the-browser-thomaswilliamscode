@@ -26,7 +26,7 @@ function moduleProject2() {
 
 	// Helper function to grab all squares
 	const getAllSquares = () => document.querySelectorAll('.square');
-  
+
  // 
 	// Populating the grid with rows and squares
 	for (let n = 0; n < 5; n++) {
@@ -77,9 +77,24 @@ function moduleProject2() {
 
 	document.addEventListener('keydown', (evt) => {
 		// 👉 TASK 3 - Use the arrow keys to highlight a new square 👈
-    if (evt.key === keys.up) {
-      console.log('homie we up!')
-    }
+
+    // setting up variable names
+    let up = evt.key === keys.up
+    let down = evt.key === keys.down;
+    let left = evt.key === keys.left;
+    let right = evt.key === keys.right;
+
+
+    if (up) {
+      console.log('up')
+		} else if (down) {
+        console.log('down')
+		} else if (left) {
+        console.log('left')
+		} else if (right) {
+        console.log('right')
+		}
+  
 		// 👉 TASK 4 - Use the space bar to exterminate a mosquito 👈
 		// 👉 TASK 5 - End the game 👈
 	});
