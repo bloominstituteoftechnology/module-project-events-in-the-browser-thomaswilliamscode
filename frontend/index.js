@@ -83,19 +83,67 @@ function moduleProject2() {
     let down = evt.key === keys.down;
     let left = evt.key === keys.left;
     let right = evt.key === keys.right;
+    let current = document.querySelector('.targeted')
 
 
     if (up) {
-      console.log('up')
+      if (current.parentElement.previousSibling) {
+        let position = 0
+        let posCheck = current
+        for ( let i = 0; i < 5; i++) {
+          if ( posCheck.previousElementSibling ) {
+            posCheck = posCheck.previousElementSibling;
+            position++
+          }
+        }
+        if (current.parentElement.previousSibling.children) {
+          current.classList.remove('targeted');
+          current.parentElement.previousSibling.children[position].classList.add('targeted')
+        }
+        
+      }
 		} else if (down) {
-        console.log('down')
+        if (current.parentElement.nextElementSibling) {
+					let position = 0;
+					let posCheck = current;
+					for (let i = 0; i < 5; i++) {
+						if (posCheck.previousElementSibling) {
+							posCheck = posCheck.previousElementSibling;
+							position++;
+						}
+					}
+					if (current.parentElement.nextElementSibling.children) {
+						current.classList.remove('targeted');
+						current.parentElement.nextSibling.children[
+							position
+						].classList.add('targeted');
+					}
+				}
 		} else if (left) {
-        console.log('left')
+        if (current.previousElementSibling) {
+          current.classList.remove('targeted');
+					current.previousElementSibling.classList.add('targeted');
+        }
 		} else if (right) {
-        console.log('right')
+        if (current.nextElementSibling) {
+					current.classList.remove('targeted');
+					current.nextElementSibling.classList.add('targeted');
+				}
 		}
   
 		// 👉 TASK 4 - Use the space bar to exterminate a mosquito 👈
+    // set up spacebar keypress
+    let space = evt.key === keys.space;
+
+    if (current.firstChild) {
+      if (space) {
+        if (current.firstChild.dataset.status === 'alive') {
+          current.firstChild.dataset.status = 'dead';
+          current.style.background = 'red'
+          
+        }
+      }
+    }
 		// 👉 TASK 5 - End the game 👈
 	});
 	// 👆 WORK WORK ABOVE THIS LINE 👆
