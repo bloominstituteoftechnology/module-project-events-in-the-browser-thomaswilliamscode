@@ -1,4 +1,4 @@
-
+let deadMosquitos = 0;
 // 👉 TASK 1 - Understand the existing code 👈
 function moduleProject2() {
 	// 👇 WORK WORK BELOW THIS LINE 👇
@@ -27,7 +27,7 @@ function moduleProject2() {
 	// Helper function to grab all squares
 	const getAllSquares = () => document.querySelectorAll('.square');
 
- // 
+	//
 	// Populating the grid with rows and squares
 	for (let n = 0; n < 5; n++) {
 		// Creating the rows
@@ -41,7 +41,7 @@ function moduleProject2() {
 			row.appendChild(square);
 			square.addEventListener('click', (e) => {
 				// 👉 TASK 2 - Use a click handler to target a square 👈
-        let currentSquare = document.querySelector('.targeted');
+				let currentSquare = document.querySelector('.targeted');
 				currentSquare.classList.remove('targeted');
 				e.currentTarget.classList.add('targeted');
 			});
@@ -74,77 +74,95 @@ function moduleProject2() {
 		allSquares[randomInt].appendChild(mosquito);
 	});
 
-
 	document.addEventListener('keydown', (evt) => {
 		// 👉 TASK 3 - Use the arrow keys to highlight a new square 👈
 
-    // setting up variable names
-    let up = evt.key === keys.up
-    let down = evt.key === keys.down;
-    let left = evt.key === keys.left;
-    let right = evt.key === keys.right;
-    let current = document.querySelector('.targeted')
+		// setting up variable names
+		let up = evt.key === keys.up;
+		let down = evt.key === keys.down;
+		let left = evt.key === keys.left;
+		let right = evt.key === keys.right;
+		let current = document.querySelector('.targeted');
 
-
-    if (up) {
-      if (current.parentElement.previousSibling) {
-        let position = 0
-        let posCheck = current
-        for ( let i = 0; i < 5; i++) {
-          if ( posCheck.previousElementSibling ) {
-            posCheck = posCheck.previousElementSibling;
-            position++
-          }
-        }
-        if (current.parentElement.previousSibling.children) {
-          current.classList.remove('targeted');
-          current.parentElement.previousSibling.children[position].classList.add('targeted')
-        }
-        
-      }
-		} else if (down) {
-        if (current.parentElement.nextElementSibling) {
-					let position = 0;
-					let posCheck = current;
-					for (let i = 0; i < 5; i++) {
-						if (posCheck.previousElementSibling) {
-							posCheck = posCheck.previousElementSibling;
-							position++;
-						}
-					}
-					if (current.parentElement.nextElementSibling.children) {
-						current.classList.remove('targeted');
-						current.parentElement.nextSibling.children[
-							position
-						].classList.add('targeted');
+		if (up) {
+			if (current.parentElement.previousSibling) {
+				let position = 0;
+				let posCheck = current;
+				for (let i = 0; i < 5; i++) {
+					if (posCheck.previousElementSibling) {
+						posCheck = posCheck.previousElementSibling;
+						position++;
 					}
 				}
-		} else if (left) {
-        if (current.previousElementSibling) {
-          current.classList.remove('targeted');
-					current.previousElementSibling.classList.add('targeted');
-        }
-		} else if (right) {
-        if (current.nextElementSibling) {
+				if (current.parentElement.previousSibling.children) {
 					current.classList.remove('targeted');
-					current.nextElementSibling.classList.add('targeted');
+					current.parentElement.previousSibling.children[
+						position
+					].classList.add('targeted');
 				}
+			}
+		} else if (down) {
+			if (current.parentElement.nextElementSibling) {
+				let position = 0;
+				let posCheck = current;
+				for (let i = 0; i < 5; i++) {
+					if (posCheck.previousElementSibling) {
+						posCheck = posCheck.previousElementSibling;
+						position++;
+					}
+				}
+				if (current.parentElement.nextElementSibling.children) {
+					current.classList.remove('targeted');
+					current.parentElement.nextSibling.children[position].classList.add(
+						'targeted'
+					);
+				}
+			}
+		} else if (left) {
+			if (current.previousElementSibling) {
+				current.classList.remove('targeted');
+				current.previousElementSibling.classList.add('targeted');
+			}
+		} else if (right) {
+			if (current.nextElementSibling) {
+				current.classList.remove('targeted');
+				current.nextElementSibling.classList.add('targeted');
+			}
 		}
-  
-		// 👉 TASK 4 - Use the space bar to exterminate a mosquito 👈
-    // set up spacebar keypress
-    let space = evt.key === keys.space;
 
-    if (current.firstChild) {
-      if (space) {
-        if (current.firstChild.dataset.status === 'alive') {
-          current.firstChild.dataset.status = 'dead';
-          current.style.background = 'red'
-          
-        }
-      }
-    }
+		// 👉 TASK 4 - Use the space bar to exterminate a mosquito 👈
+		// variable for dead mosquitos
+
+		// set up spacebar keypress
+		let space = evt.key === keys.space;
+
+		if (current.firstChild) {
+			if (space) {
+				if (current.firstChild.dataset.status === 'alive') {
+					current.firstChild.dataset.status = 'dead';
+					deadMosquitos++;
+					current.style.background = 'red';
+				}
+			}
+		}
 		// 👉 TASK 5 - End the game 👈
+		// know when to end the game
+		if (deadMosquitos === 5) {
+			// add restart button to h2
+			let button = document.createElement('button');
+			button.textContent = 'Restart';
+			let h2 = document.querySelector('header h2');
+      h2.appendChild(button)
+
+			// change p to say Extermination completed in 1576.622 seconds!
+      let info = document.querySelector('.info')
+      let time = getTimeElapsed()
+      info.textContent = `Extermination completed in ${time / 1000} seconds!`;
+		}
+
+		// add restart button
+
+		// change p to say Extermination completed in 1576.622 seconds!
 	});
 	// 👆 WORK WORK ABOVE THIS LINE 👆
 }
@@ -152,5 +170,6 @@ function moduleProject2() {
 // ❗ DO NOT MODIFY THE CODE BELOW
 // ❗ DO NOT MODIFY THE CODE BELOW
 // ❗ DO NOT MODIFY THE CODE BELOW
-if (typeof module !== 'undefined' && module.exports) module.exports = { moduleProject2 }
-else moduleProject2()
+if (typeof module !== 'undefined' && module.exports)
+	module.exports = { moduleProject2 };
+else moduleProject2();
